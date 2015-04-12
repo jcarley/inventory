@@ -20,7 +20,12 @@ require 'rspec/rails'
 #
 # Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
+JsonSpec.configure do
+  exclude_keys "created_at", "updated_at"
+end
+
 RSpec.configure do |config|
+  config.include JsonSpec::Helpers
 
   config.before(:each) do
     NoBrainer.purge!

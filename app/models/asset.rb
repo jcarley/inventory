@@ -5,7 +5,7 @@ class Asset
   field :description, type: String
   field :serial_number, type: String
   field :manufacturer, type: String
-  field :purchase_date, type: Time
+  field :purchase_date, type: Date
   field :purchase_price, type: Float
   field :purchased_from, type: String
   field :quantity, type: Integer

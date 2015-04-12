@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   scope :api do
-    resources :assets, :only => [:index, :create]
+    resources :assets
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -5,6 +5,10 @@ module Storage
       @db = db
     end
 
+    def find(id)
+      db.find(id)
+    end
+
     def save(record)
       record.save?
     end
@@ -23,7 +27,7 @@ module Storage
     end
 
     def list(offset = 0, limit = 5)
-      db.all
+      db.all.skip(offset).limit(limit).to_a
     end
 
     private
