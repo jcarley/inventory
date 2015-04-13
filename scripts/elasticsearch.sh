@@ -18,6 +18,13 @@ if ! debInst 'elasticsearch'; then
     wget -O - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | sudo apt-key add -
     echo 'deb http://packages.elasticsearch.org/elasticsearch/1.4/debian stable main' | sudo tee /etc/apt/sources.list.d/elasticsearch.list
 
+    # sudo add-apt-repository ppa:openjdk-r/ppa -y
+    # sudo apt-get update
+    # sudo apt-get install openjdk-8-jdk -y
+    # sudo update-alternatives --config java
+    # sudo update-alternatives --config javac
+
+
     sudo apt-get update
     sudo aptitude install -y openjdk-7-jdk openjdk-7-jre-headless
     sudo apt-get -y install elasticsearch=1.4.4
