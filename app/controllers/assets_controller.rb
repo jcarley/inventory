@@ -37,4 +37,5 @@ class AssetsController < ApplicationController
   def asset_id
     params.require(:id)
   end
+
 end
