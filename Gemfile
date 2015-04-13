@@ -10,6 +10,7 @@ gem 'rethinkdb'
 gem 'nobrainer'
 gem 'virtus'
 gem 'wisper'
+gem 'elasticsearch-model'
 
 group :development, :test do
   gem 'pry-rails'

@@ -25,7 +25,7 @@ module Lib
           status: :unprocessable_entity,
           json: {
             success: false,
-            info: error.message,
+            info: "#{error.class}: #{error.message}",
             data: {}
           }
         }

@@ -53,6 +53,18 @@ GEM
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.2.5)
+    elasticsearch (1.0.8)
+      elasticsearch-api (= 1.0.7)
+      elasticsearch-transport (= 1.0.7)
+    elasticsearch-api (1.0.7)
+      multi_json
+    elasticsearch-model (0.1.7)
+      activesupport (> 3)
+      elasticsearch (> 0.4)
+      hashie
+    elasticsearch-transport (1.0.7)
+      faraday
+      multi_json
     equalizer (0.0.11)
     erubis (2.7.0)
     factory_girl (4.5.0)
@@ -60,8 +72,11 @@ GEM
     factory_girl_rails (4.5.0)
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
+    faraday (0.9.1)
+      multipart-post (>= 1.2, < 3)
     globalid (0.3.5)
       activesupport (>= 4.1.0)
+    hashie (3.4.1)
     hike (1.2.3)
     i18n (0.7.0)
     ice_nine (0.11.1)
@@ -79,6 +94,7 @@ GEM
     mini_portile (0.6.2)
     minitest (5.5.1)
     multi_json (1.11.0)
+    multipart-post (2.0.0)
     nobrainer (0.22.0)
       activemodel (>= 4.1.0)
       activesupport (>= 4.1.0)
@@ -185,6 +201,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers
   byebug
+  elasticsearch-model
   factory_girl_rails
   json_spec
   middleware

@@ -4,8 +4,14 @@ module Entity
   included do
     self.include NoBrainer::Document
     self.include NoBrainer::Document::Timestamps
+    self.include Elasticsearch::Model
+    self.include Elasticsearch::Model::Callbacks
 
     field :uid, type: String
+  end
+
+  def as_indexed_json(options = {})
+    as_json
   end
 
   module ClassMethods

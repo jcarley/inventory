@@ -4,6 +4,7 @@ class Command
   include ActiveModel::Serializers::JSON
 
   class NotImplementedError < StandardError; end
+  class CommandNotValidError < StandardError; end
 
   def self.from_json(json)
     klass = self.new
@@ -20,7 +21,7 @@ class Command
     if self.valid?
       self.execute
     else
-      raise "Error"
+      raise CommandNotValidError, self.errors.full_messages
     end
   end
 
