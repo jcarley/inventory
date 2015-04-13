@@ -2,13 +2,14 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.2.1'
 gem 'rails-api'
+gem 'active_model_serializers'
 gem 'puma'
 gem 'uuidtools'
 gem 'middleware'
 gem 'rethinkdb'
 gem 'nobrainer'
 gem 'virtus'
-gem 'active_model_serializers'
+gem 'wisper'
 
 group :development, :test do
   gem 'pry-rails'
