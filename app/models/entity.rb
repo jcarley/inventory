@@ -1,9 +1,12 @@
 module Entity
   extend ActiveSupport::Concern
-  include NoBrainer::Document
-  include NoBrainer::Document::Timestamps
 
   included do
+
+    include Elasticsearch::Model
+    include Elasticsearch::Model::Callbacks
+    include NoBrainer::Document
+    include NoBrainer::Document::Timestamps
 
     self.send(:after_create) { Storage::Indexer.perform_async(:index, self.id, self.class) }
     self.send(:after_update) { Storage::Indexer.perform_async(:update, self.id, self.class) }

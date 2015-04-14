@@ -16,7 +16,9 @@ class Domain
     if block_given?
       cr = env[:command_result]
       block = Proc.new
-      cr.instance_eval(&block)
+      proxy = CommandResultProxy.new(cr, block)
+      proxy.execute
+      cr
     else
       env[:command_result]
     end
@@ -31,4 +33,3 @@ class Domain
   end
 
 end
-

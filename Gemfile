@@ -11,6 +11,7 @@ gem 'nobrainer'
 gem 'virtus'
 gem 'wisper'
 gem 'elasticsearch-model'
+gem 'elasticsearch-ruby'
 gem 'sidekiq'
 gem 'sinatra', :require => nil
 

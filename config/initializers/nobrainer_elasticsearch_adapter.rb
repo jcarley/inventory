@@ -56,4 +56,6 @@ module Elasticsearch
     end
   end
 end
+
 Elasticsearch::Model.client = Elasticsearch::Client.new log: true
+

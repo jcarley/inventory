@@ -1,0 +1,7 @@
+
+Get all documents from an index
+-------------------------------
+  client = Elasticsearch::Client.new(log: true)
+  result = client.msearch body: [ { index: 'assets', type: 'asset', search: { query: { match_all: {} } } } ]
+  result = Asset.__elasticsearch__.client.msearch body: [ { index: 'assets', type: 'asset', search: { query: { match_all: {} } } } ]
+

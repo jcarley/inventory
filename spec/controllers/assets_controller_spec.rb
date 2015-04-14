@@ -84,7 +84,7 @@ RSpec.describe AssetsController, type: :controller do
 
       it "returns a 204 :no_content status" do
         put :destroy, :id => asset_id, format: :json
-        # expect(response).to have_http_status(:no_content)
+        expect(response).to have_http_status(:no_content)
       end
 
     end
