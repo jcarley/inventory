@@ -7,7 +7,15 @@ module Elasticsearch
 
         module Records
           def records
-            klass.where(:id.in => @ids).to_a
+            criteria = klass.where(:id.in => ids)
+
+            # criteria.instance_exec(response.response['hits']['hits']) do |hits|
+              # define_singleton_method :to_a do
+                # self.entries.sort_by { |e| hits.index { |hit| hit['_id'].to_s == e.id.to_s } }
+              # end
+            # end
+
+            criteria
           end
         end
 
