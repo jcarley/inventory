@@ -18,15 +18,29 @@ class AssetsController < ApplicationController
   def update
     cmd = Assets::UpdateAssetCommand.new(:id => asset_id, :attrs => asset_params)
     Domain.execute(cmd).on_success? do |result|
-      render status: :no_content, json: Asset.find(asset_id)
+      render status: :ok, json: Asset.find(asset_id)
     end.on_error? do |result|
       render Lib::ResponseErrorFormatter.format(self, result.error)
     end
   end
 
   def destroy
-
+    cmd = Assets::DeleteAssetCommand.new(:id => asset_id)
+    Domain.execute(cmd) do
+      puts "in block"
+      is_success? { |result| render status: :no_content, json: {} }
+      is_error? { |result| render Lib::ResponseErrorFormatter.format(self, result.error) }
+    end
   end
+
+  # def destroy
+    # cmd = Assets::DeleteAssetCommand.new(:id => asset_id)
+    # Domain.execute(cmd).on_success? do |result|
+      # render status: :no_content, json: {}
+    # end.on_error? do |result|
+      # render Lib::ResponseErrorFormatter.format(self, result.error)
+    # end
+  # end
 
   private
 

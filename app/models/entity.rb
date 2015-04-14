@@ -1,17 +1,15 @@
 module Entity
   extend ActiveSupport::Concern
+  include NoBrainer::Document
+  include NoBrainer::Document::Timestamps
 
   included do
-    self.include NoBrainer::Document
-    self.include NoBrainer::Document::Timestamps
-    self.include Elasticsearch::Model
-    self.include Elasticsearch::Model::Callbacks
+
+    self.send(:after_create) { Storage::Indexer.perform_async(:index, self.id, self.class) }
+    self.send(:after_update) { Storage::Indexer.perform_async(:update, self.id, self.class) }
+    self.send(:after_destroy) { Storage::Indexer.perform_async(:destroy, self.id, self.class) }
 
     field :uid, type: String
-  end
-
-  def as_indexed_json(options = {})
-    as_json
   end
 
   module ClassMethods
@@ -28,6 +26,10 @@ module Entity
       UUIDTools::UUID.timestamp_create.to_s
     end
 
+  end
+
+  def as_indexed_json(options = {})
+    as_json
   end
 
   def get_uid

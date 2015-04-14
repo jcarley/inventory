@@ -14,6 +14,12 @@ class Asset
 
   validates :name, :presence => true
 
+  def self.delete_asset(id)
+    asset = Asset.find(id)
+    asset.apply_event(:destroy_asset, :id => id)
+    asset
+  end
+
   def self.create_asset(params)
     asset = Asset.new(params)
     asset.apply_event(:created_asset, params)
