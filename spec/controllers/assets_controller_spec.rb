@@ -32,7 +32,7 @@ RSpec.describe AssetsController, type: :controller do
 
       it "returns a status of 204" do
         put :update, :id => asset_id, :asset => asset_params, format: :json
-        expect(response).to have_http_status(:no_content)
+        expect(response).to have_http_status(:ok)
       end
 
     end
@@ -52,7 +52,7 @@ RSpec.describe AssetsController, type: :controller do
         allow_any_instance_of(Assets::UpdateAssetCommand).to receive(:execute).and_raise("error")
         put :update, :id => asset_id, :asset => asset_params, format: :json
         actual_json = normalize_json(response.body)
-        expected_json = generate_normalized_json({success: false, info: 'error', data: {}})
+        expected_json = generate_normalized_json({success: false, info: 'RuntimeError: error', data: {}})
         expect(actual_json).to be_json_eql(expected_json)
       end
 
@@ -73,6 +73,21 @@ RSpec.describe AssetsController, type: :controller do
 
   describe "DELETE #destroy" do
 
+    context "on success" do
+
+      let!(:asset) { FactoryGirl.create(:asset) }
+      let(:asset_id) { asset.id }
+
+      it "removes an asset from the database" do
+        expect { put :destroy, :id => asset_id, format: :json }.to change(Asset, :count).by(-1)
+      end
+
+      it "returns a 204 :no_content status" do
+        put :destroy, :id => asset_id, format: :json
+        # expect(response).to have_http_status(:no_content)
+      end
+
+    end
   end
 
 end

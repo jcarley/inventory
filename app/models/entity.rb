@@ -5,9 +5,9 @@ module Entity
 
   included do
 
-    self.send(:after_create) { Indexer.perform_async(:index, self.id, self.class) }
-    self.send(:after_update) { Indexer.perform_async(:update, self.id, self.class) }
-    self.send(:after_destroy) { Indexer.perform_async(:destroy, self.id, self.class) }
+    self.send(:after_create) { Storage::Indexer.perform_async(:index, self.id, self.class) }
+    self.send(:after_update) { Storage::Indexer.perform_async(:update, self.id, self.class) }
+    self.send(:after_destroy) { Storage::Indexer.perform_async(:destroy, self.id, self.class) }
 
     field :uid, type: String
   end
