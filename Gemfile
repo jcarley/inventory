@@ -11,6 +11,8 @@ gem 'nobrainer'
 gem 'virtus'
 gem 'wisper'
 gem 'elasticsearch-model'
+gem 'sidekiq'
+gem 'sinatra', :require => nil
 
 group :development, :test do
   gem 'pry-rails'
