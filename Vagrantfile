@@ -4,6 +4,17 @@
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
+required_plugins = %w(vagrant-share vagrant-vbguest vagrant-bindfs)
+
+required_plugins.each do |plugin|
+  need_restart = false
+  unless Vagrant.has_plugin? plugin
+    system "vagrant plugin install #{plugin}"
+    need_restart = true
+  end
+  exec "vagrant #{ARGV.join(' ')}" if need_restart
+end
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provider :vmware_fusion do |v|
@@ -35,5 +46,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 80, host: 80, :auto => true
   config.vm.network :forwarded_port, guest: 8080, host: 8080, :auto => true
 
+  ## Share the default `vagrant` folder via NFS with your own options
+  config.vm.synced_folder ".", "/vagrant", type: :nfs
+  config.bindfs.bind_folder "/vagrant", "/vagrant"
+
   config.vm.synced_folder ".", "/home/vagrant/apps/inventory", :nfs => true
+  config.bindfs.bind_folder "/home/vagrant/apps/inventory", "/home/vagrant/apps/inventory"
+
+  # config.vm.synced_folder ".", "/home/vagrant/apps/inventory", :nfs => true
 end
