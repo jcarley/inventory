@@ -38,3 +38,17 @@ fancy_echo "Installing node, to render the rails asset pipeline ..."
   curl -sL https://deb.nodesource.com/setup | sudo bash -
   sudo apt-get install -y nodejs
   sudo npm install npm -g
+
+  sudo npm install -g yo
+  sudo npm install -g generator-gulp-angular
+  sudo npm install -g generator-angular
+  sudo npm install -g grunt-cli
+  sudo npm install -g bower
+  sudo npm install -g compass
+  sudo npm install --save-dev gulp-install
+
+  # mkdir client && cd $_
+  # yo gulp-angular fake_lunch_hub
+  # gulp serve
+  # bower install
+

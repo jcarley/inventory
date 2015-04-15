@@ -97,6 +97,7 @@ fi
 
   cat <<DEFAULTGEMS > $HOME/.rbenv/default-gems
 bundler
+compass
 DEFAULTGEMS
 
 fancy_echo "Updating to latest Rubygems version ..."
