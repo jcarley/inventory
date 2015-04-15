@@ -39,6 +39,7 @@ fancy_echo "Installing rbenv plugins ..."
   PLUGINS=(
     "sstephenson:rbenv-vars"
     "sstephenson:ruby-build"
+    "sstephenson:rbenv-default-gems"
     "sstephenson:rbenv-gem-rehash"
     "rkh:rbenv-update"
     "rkh:rbenv-whatis"
@@ -89,6 +90,14 @@ fi
 :benchmark: false
 gem: --no-ri --no-rdoc
 GEMRC
+
+if [[ -a "$HOME/.rbenv/default-gems" ]]; then
+  sudo rm $HOME/.rbenv/default-gems
+fi
+
+  cat <<DEFAULTGEMS > $HOME/.rbenv/default-gems
+bundler
+DEFAULTGEMS
 
 fancy_echo "Updating to latest Rubygems version ..."
   gem update --system
