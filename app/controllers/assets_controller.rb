@@ -1,26 +1,25 @@
 class AssetsController < ApplicationController
 
   def index
+    paging_params = query_string_params
     repo = AssetRepository.new
-    assets = repo.list
+    assets = repo.list(paging_params["offset"], paging_params["limit"])
     render json: assets
   end
 
   def create
     cmd = Assets::CreateAssetCommand.new(asset_params)
-    Domain.execute(cmd).on_success? do |result|
-      render json: Asset.find(cmd.id)
-    end.on_error? do |result|
-      render Lib::ResponseErrorFormatter.format(self, result.error)
+    Domain.execute(cmd) do
+      is_success? { |result| render json: Asset.find(cmd.id) }
+      is_error? { |result| render Lib::ResponseErrorFormatter.format(self, result.error) }
     end
   end
 
   def update
     cmd = Assets::UpdateAssetCommand.new(:id => asset_id, :attrs => asset_params)
-    Domain.execute(cmd).on_success? do |result|
-      render status: :ok, json: Asset.find(asset_id)
-    end.on_error? do |result|
-      render Lib::ResponseErrorFormatter.format(self, result.error)
+    Domain.execute(cmd) do
+      is_success? { |result| render status: :ok, json: Asset.find(asset_id) }
+      is_error? { |result| render Lib::ResponseErrorFormatter.format(self, result.error) }
     end
   end
 
@@ -34,9 +33,16 @@ class AssetsController < ApplicationController
 
   private
 
-  def asset_params
-    params.require(:asset)
+  def query_string_params
+    params.permit(:offset, :limit)
   end
+
+  def asset_params
+    params.require(:asset).permit(:name, :description, :serial_number, :manufacturer,
+                                  :purchase_date, :purchase_price, :purchased_from, :quantity,
+                                  :value_new, :current_value)
+  end
+
 
   def asset_id
     params.require(:id)

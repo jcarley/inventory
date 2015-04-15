@@ -19,9 +19,9 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
-  gem 'pry-byebug'
+  gem 'pry-byebug', platform: 'ruby'
   gem 'json_spec'
-  gem 'byebug'
+  gem 'byebug', platform: 'ruby'
   gem 'spring'
 end
 

@@ -8,6 +8,10 @@ trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
 
+if [ -z "${RBENV_ROOT}" ]; then
+  RBENV_ROOT="$HOME/.rbenv"
+fi
+
 fancy_echo "Installing base ruby build dependencies ..."
   sudo aptitude build-dep -y ruby1.9.3
 
@@ -29,23 +33,33 @@ if [[ ! -d "$HOME/.rbenv" ]]; then
     fi
 fi
 
-if [[ ! -d "$HOME/.rbenv/plugins/rbenv-gem-rehash" ]]; then
-  fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
-    git clone https://github.com/sstephenson/rbenv-gem-rehash.git \
-      $HOME/.rbenv/plugins/rbenv-gem-rehash
-fi
+fancy_echo "Installing rbenv plugins ..."
 
-if [[ ! -d "$HOME/.rbenv/plugins/rbenv-vars" ]]; then
-  fancy_echo "Installing rbenv-vars so the shell has access to environment variables..."
-    git clone https://github.com/sstephenson/rbenv-vars.git \
-      $HOME/.rbenv/plugins/rbenv-vars
-fi
+  # Install plugins:
+  PLUGINS=(
+    "sstephenson:rbenv-vars"
+    "sstephenson:ruby-build"
+    "sstephenson:rbenv-gem-rehash"
+    "rkh:rbenv-update"
+    "rkh:rbenv-whatis"
+    "rkh:rbenv-use"
+  )
 
-if [[ ! -d "$HOME/.rbenv/plugins/ruby-build" ]]; then
-  fancy_echo "Installing ruby-build, to install Rubies ..."
-    git clone https://github.com/sstephenson/ruby-build.git \
-      $HOME/.rbenv/plugins/ruby-build
-fi
+  for plugin in ${PLUGINS[@]} ; do
+
+    KEY=${plugin%%:*}
+    VALUE=${plugin#*:}
+
+    RBENV_PLUGIN_ROOT="${RBENV_ROOT}/plugins/$VALUE"
+    if [ ! -d "$RBENV_PLUGIN_ROOT" ] ; then
+      git clone https://github.com/$KEY/$VALUE.git $RBENV_PLUGIN_ROOT
+    else
+      cd $RBENV_PLUGIN_ROOT
+      echo "Pulling $VALUE updates."
+      git pull
+    fi
+
+  done
 
 ruby_version="2.2.1"
 

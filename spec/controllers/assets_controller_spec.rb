@@ -4,6 +4,23 @@ RSpec.describe AssetsController, type: :controller do
 
   describe "GET #index" do
 
+    let(:assets) do
+      list = FactoryGirl.create_list(:asset, 10)
+      serializer_class = ActiveModel::Serializer.serializer_for(list)
+      serializer = serializer_class.new(list, {})
+      serializer.as_json
+    end
+
+    it "gets a list of assets" do
+      # grab the first five assets created, and format as json
+      sliced_json = assets.slice(0..4).to_json
+
+      # query for the first 5 assets through the api
+      get :index, :offset => 0, :limit => 5, format: :json
+      expect(response).to have_http_status(:ok)
+      expect(normalize_json(response.body)).to be_json_eql(normalize_json(sliced_json))
+    end
+
   end
 
   describe "POST #create" do
