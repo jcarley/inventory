@@ -25,6 +25,13 @@ RSpec.describe AssetsController, type: :controller do
 
   describe "POST #create" do
 
+    context "with valid params" do
+      it "creates an asset" do
+        asset_params = FactoryGirl.attributes_for(:asset)
+        expect { post :create, :asset => asset_params, format: :json }.to change(Asset, :count).by(1)
+      end
+    end
+
   end
 
   describe "PUT #update" do
