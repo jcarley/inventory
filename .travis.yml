@@ -1,0 +1,36 @@
+language: ruby
+cache: bundler
+
+rvm:
+  - 2.2
+  - jruby
+
+jdk:
+  - openjdk7
+
+matrix:
+  exclude:
+    - rvm: 2.2
+      jdk: openjdk7
+
+services:
+  - redis-server
+  - elasticsearch
+
+before_install:
+  - gem update --system
+  - gem --version
+
+before_script:
+  - sudo add-apt-repository ppa:rethinkdb/ppa -y
+  - sudo apt-get update -q
+  - sudo apt-get install rethinkdb
+
+script: 'bundle exec rake'
+
+notifications:
+  email:
+    recipients:
+      - jeff.carley@gmail.com
+    on_failure: change
+    on_success: never
