@@ -26,8 +26,6 @@ before_script:
   - sudo apt-get update -q
   - sudo apt-get install rethinkdb
 
-script: 'bundle exec rake'
-
 notifications:
   email:
     recipients:
