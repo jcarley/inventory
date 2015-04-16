@@ -24,7 +24,6 @@ if ! debInst 'elasticsearch'; then
     # sudo update-alternatives --config java
     # sudo update-alternatives --config javac
 
-
     sudo apt-get update
     sudo aptitude install -y openjdk-7-jdk openjdk-7-jre-headless
     sudo apt-get -y install elasticsearch=1.4.4
