@@ -31,17 +31,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                  "--nictype2", "Am79C973"]
   end
 
-  # config.vm.box = "jcarley/ubuntu1404-docker-puppet"
-  # config.vm.box = "ubuntu/trusty64"
-  # config.vm.box = "chef/ubuntu-14.04"
   config.vm.box = "jcarley/ubuntu1404"
 
-  # config.vm.provision "shell", path: "scripts/base.sh"
-  # config.vm.provision "shell", path: "scripts/database.sh"
-  # config.vm.provision "shell", path: "scripts/ruby.sh"
   config.vm.provision "shell", path: "scripts/runner.sh"
 
   config.vm.network :private_network, ip: "33.33.33.4"
+  config.vm.network :forwarded_port, guest: 9000, host: 9000, :auto => true
   config.vm.network :forwarded_port, guest: 9292, host: 9292, :auto => true
   config.vm.network :forwarded_port, guest: 80, host: 80, :auto => true
   config.vm.network :forwarded_port, guest: 8080, host: 8080, :auto => true
@@ -52,6 +47,4 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.synced_folder ".", "/home/vagrant/apps/inventory", :nfs => true
   config.bindfs.bind_folder "/home/vagrant/apps/inventory", "/home/vagrant/apps/inventory"
-
-  # config.vm.synced_folder ".", "/home/vagrant/apps/inventory", :nfs => true
 end
