@@ -45,7 +45,7 @@ fancy_echo "Installing node, to render the rails asset pipeline ..."
   sudo npm install -g grunt-cli
   sudo npm install -g bower
   sudo npm install -g compass
-  sudo npm install --save-dev gulp-install
+  sudo npm install -g gulp
 
   # mkdir client && cd $_
   # yo gulp-angular fake_lunch_hub
