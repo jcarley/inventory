@@ -50,15 +50,20 @@ fancy_echo "Installing & configuring Nginx, the best webserver around ..."
     sudo apt-get install software-properties-common -y
     sudo add-apt-repository ppa:nginx/stable -y
     sudo apt-get update
-    sudo apt-get install -y nginx
+    sudo apt-get install -y nginx apache2-utils
   fi
   sudo cp -f /home/vagrant/apps/inventory/scripts/files/nginx/nginx.conf /etc/nginx/nginx.conf
 
   remove_site "default"
 
-  sudo cp -f /home/vagrant/apps/inventory/scripts/files/nginx/inventory /etc/nginx/sites-available/inventory
 
-  enable_site "inventory"
+  FILES=/home/vagrant/apps/inventory/scripts/files/nginx/*.site
+  shopt -s nullglob
+  for f in $FILES
+  do
+    sudo cp -f $f /etc/nginx/sites-available/$(basename $f)
+    enable_site "$(basename $f)"
+  done
 
   restart_nginx
 
