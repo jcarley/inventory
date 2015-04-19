@@ -4,5 +4,6 @@ angular.module('Inventory')
       'HTML5 Boilerplate',
       'AngularJS',
       'Karma',
-      'SitePoint'
+      'SitePoint',
+      'GoLang'
     ]
