@@ -17,7 +17,7 @@ module.exports = function(grunt) {
           join: true
         },
         files: {
-          '<%= project.assets %>/tmp/app.js': '<%= project.assets %>/coffeescripts/**/*.coffee', // 1:1 compile, identical output to join = false
+          '<%= project.assets %>/tmp/app.js': '<%= project.assets %>/coffeescripts/**/*.coffee',
         }
       },
     },
