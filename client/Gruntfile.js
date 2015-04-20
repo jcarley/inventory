@@ -72,13 +72,11 @@ module.exports = function(grunt) {
     watch: {
       js: {
         files: ['<%= project.assets %>/coffeescripts/{,*/}/*.coffee'],
-        tasks: ['coffee:compileJoined', 'ngAnnotate', 'uglify' ]
+        tasks: ['jsbuild']
       },
       sass: {
         files: '<%= project.assets %>/sass/{,*/}*.{scss,sass}',
-        tasks: [
-          'sass:dev'
-        ]
+        tasks: ['cssbuild']
       }
     }
   });
@@ -90,8 +88,16 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
+  grunt.registerTask('cssbuild', [
+    'sass:dev', 'cssmin:target'
+  ]);
+
+  grunt.registerTask('jsbuild', [
+    'coffee:compileJoined', 'ngAnnotate', 'uglify'
+  ]);
+
   grunt.registerTask('build', [
-    'coffee:compileJoined', 'ngAnnotate', 'uglify', 'sass:dev', 'cssmin:target'
+    'jsbuild', 'cssbuild'
   ]);
 
   grunt.registerTask('default', [
