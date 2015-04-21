@@ -6,21 +6,50 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
 
     project: {
-      name: ['inventory'],
-      app: ['app'],
-      assets: ['<%= project.app %>/assets'],
-      css: ['<%= project.assets %>/sass/style.scss']
+      name: '<%= pkg.name %>',
+      app: 'app',
+      dist: 'dist',
+      assets: '<%= project.app %>/assets',
+      coffeescripts: '<%= project.assets %>/coffeescripts',
+      javascripts: '<%= project.assets %>/javascripts',
+      css: '<%= project.assets %>/css',
+      tmp: '<%= project.assets %>/tmp'
     },
 
+    clean: [
+      '<%= project.javascripts %>',
+      '<%= project.css %>',
+      '<%= project.tmp %>'
+    ],
+
     coffee : {
-      compileJoined: {
-        options: {
-          join: true
-        },
-        files: {
-          '<%= project.assets %>/tmp/app.js': '<%= project.assets %>/coffeescripts/**/*.coffee',
-        }
+      options: {
+        sourceMap: true
       },
+      dev: {
+        expand: true,
+        flatten: false,
+        cwd: '<%= project.coffeescripts %>',
+        src: ['**/*.coffee'],
+        dest: '<%= project.javascripts %>',
+        ext: '.js'
+      }
+    },
+
+    useminPrepare: {
+      html: '<%= project.app %>/index.html',
+      options: {
+        dest: '<%= project.dist %>',
+        flow: {
+          html: {
+            steps: {
+              js: ['concat', 'uglifyjs'],
+              css: ['cssmin']
+            },
+            post: {}
+          }
+        }
+      }
     },
 
     copy: {
@@ -33,12 +62,26 @@ module.exports = function(grunt) {
           'angular-resource/angular-resource.js',
           'angular-ui-router/release/angular-ui-router.js',
           'angular-fontawesome/dist/angular-fontawesome.js',
-          'bootstrap-sass-official/assets/javascripts/bootstrap.js'
+          'bootstrap-sass-official/assets/javascripts/bootstrap.js',
+          'underscore/underscore.js',
+          'fullcalendar/dist/fullcalendar.js'
         ],
-        dest: '<%= project.assets %>/tmp/',
+        dest: '<%= project.assets %>/vendor/assets/javascripts/',
+        flatten: true,
+        filter: 'isFile'
+      },
+      css: {
+        expand: true,
+        cwd: 'app/bower_components/',
+        src: [
+          'font-awesome/css/font-awesome.css',
+          'fullcalendar/dist/fullcalendar.css'
+        ],
+        dest: '<%= project.assets %>/vendor/assets/css/',
         flatten: true,
         filter: 'isFile'
       }
+
     },
 
     ngAnnotate: {
@@ -54,6 +97,14 @@ module.exports = function(grunt) {
         sourceMap: false,
         mangle: false,
         report: 'min'
+      },
+      dist: {
+        files: [{
+          expand: true,
+          cwd: 'app/assets/vendor/assets/javascripts',
+          src: '**/*.js',
+          dest: 'app/assets/javascripts/vendor.js'
+        }]
       },
       main: {
         files: {
@@ -135,6 +186,7 @@ module.exports = function(grunt) {
   });
 
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-cssmin');

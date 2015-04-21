@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "login.js",
+  "sourceRoot": "../../coffeescripts/login/",
+  "sources": [
+    "login.js.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;AAAA,EAAA,OAAO,CAAC,MAAR,CAAe,WAAf,CACE,CAAC,UADH,CACc,UADd,EAC0B,SAAC,MAAD,GAAA;WACtB,MAAM,CAAC,SAAP,GAAmB,CACjB,aADiB,EAEjB,OAFiB,EAGjB,QAHiB,EADG;EAAA,CAD1B,CAAA,CAAA;AAAA"
+}
