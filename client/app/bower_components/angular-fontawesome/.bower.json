@@ -31,7 +31,6 @@
     "commit": "b851b2db5a13a946cb29d4d74f97e1d242553fce"
   },
   "_source": "git://github.com/picardy/angular-fontawesome.git",
-  "_target": "~0.3.2",
-  "_originalSource": "angular-fontawesome",
-  "_direct": true
+  "_target": "0.3.2",
+  "_originalSource": "angular-fontawesome"
 }
