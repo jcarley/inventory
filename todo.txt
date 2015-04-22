@@ -1,0 +1,9 @@
+
+Todo
+-------
+1) Add a test workflow
+  - Karma
+  - Jasmine
+2) Add filerev for caching
+3) Add Jade for view rendering
+
