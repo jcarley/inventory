@@ -21,4 +21,5 @@ node_modules/
 client/app/assets/tmp/
 client/app/assets/css/
 client/app/assets/javascripts/
+client/dist/
 .tmp/
