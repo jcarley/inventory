@@ -19,3 +19,4 @@ log/
 .sass-cache/
 node_modules/
 client/app/assets/tmp/
+.tmp/
