@@ -23,7 +23,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.provider :virtualbox do |v|
-    # config.vbguest.auto_reboot = true
+    config.vbguest.auto_reboot = true
     v.memory = 2048
     v.cpus = 4
     v.customize ["modifyvm", :id,
