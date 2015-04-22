@@ -5,5 +5,6 @@ angular.module('Inventory')
       'AngularJS',
       'Karma',
       'SitePoint',
-      'GoLang'
+      'GoLang',
+      'Ruby'
     ]

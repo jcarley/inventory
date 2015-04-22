@@ -5,7 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Inventory</title>
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <!-- build:css assets/css/vendor.css -->
+    <!-- endbuild -->
+
+    <!-- build:css({.tmp,app}) assets/css/style.css -->
     <link rel="stylesheet" href="assets/css/style.css">
+    <!-- endbuild -->
   </head>
   <body>
 
@@ -70,7 +77,22 @@
       </footer>
     </div> <!-- /container -->
 
-    <script src="assets/javascripts/app.min.js"></script>
+    <!-- build:js assets/javascripts/vendor.min.js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-fontawesome/dist/angular-fontawesome.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/fullcalendar/dist/fullcalendar.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js({.tmp,app}) assets/javascripts/app.min.js -->
+    <script src="assets/javascripts/app.js"></script>
+    <script src="assets/javascripts/login/login.js"></script>
+    <script src="assets/javascripts/main/main.js"></script>
+    <!-- endbuild -->
   </body>
 </html>
 
