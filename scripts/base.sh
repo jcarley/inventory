@@ -41,6 +41,7 @@ fancy_echo "Installing node, to render the rails asset pipeline ..."
 
   sudo npm install -g yo
   sudo npm install -g grunt-cli
+  sudo npm install -g karma-cli
   sudo npm install -g bower
 
   # sudo npm install -g generator-angular
