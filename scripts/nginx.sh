@@ -46,9 +46,13 @@ set -e
 fancy_echo "Installing & configuring Nginx, the best webserver around ..."
   # if test ! $(command -v nginx >/dev/null && nginx -v 2>&1 | cut -d ' ' -f 3 | grep "1.6.3"); then
   if ! command -v nginx >/dev/null; then
-    sudo apt-get install python-software-properties -y
-    sudo apt-get install software-properties-common -y
-    sudo add-apt-repository ppa:nginx/stable -y
+    source /etc/lsb-release && echo "deb http://nginx.org/packages/mainline/ubuntu/ $DISTRIB_CODENAME nginx" | sudo tee -a /etc/apt/sources.list.d/nginx.list
+    source /etc/lsb-release && echo "deb-src http://nginx.org/packages/mainline/ubuntu/ $DISTRIB_CODENAME nginx" | sudo tee -a /etc/apt/sources.list.d/nginx.list
+    wget -qO- http://nginx.org/keys/nginx_signing.key | sudo apt-key add -
+
+    # sudo apt-get install python-software-properties -y
+    # sudo apt-get install software-properties-common -y
+    # sudo add-apt-repository ppa:nginx/stable -y
     sudo apt-get update
     sudo apt-get install -y nginx apache2-utils
   fi
@@ -57,7 +61,7 @@ fancy_echo "Installing & configuring Nginx, the best webserver around ..."
   remove_site "default"
 
 
-  FILES=/home/vagrant/apps/inventory/scripts/files/nginx/*.site
+  FILES=/home/vagrant/apps/inventory/scripts/files/nginx/sites/*
   shopt -s nullglob
   for f in $FILES
   do
