@@ -2,6 +2,7 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
 
+  resources :categories, except: [:new, :edit]
   mount Sidekiq::Web => '/sidekiq'
 
   scope :api do
