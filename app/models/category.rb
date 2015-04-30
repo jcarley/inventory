@@ -1,8 +1,13 @@
 class Category
-  include NoBrainer::Document
-  include NoBrainer::Document::Timestamps
+  include Entity
 
   field :name, :type => String
   field :locked, :type => Boolean
-  field :sequence, :type => Integer
+  field :position, :type => Integer
+
+  def self.create_category(params)
+    category = Category.new(params)
+    category.apply_event(:created_category, params)
+    category
+  end
 end

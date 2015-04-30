@@ -2,11 +2,11 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
 
-  resources :categories, except: [:new, :edit]
   mount Sidekiq::Web => '/sidekiq'
 
   scope :api do
-    resources :assets
+    resources :categories, except: [:new, :edit]
+    resources :assets, except: [:new, :edit]
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
