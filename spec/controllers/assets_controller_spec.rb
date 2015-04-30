@@ -13,7 +13,7 @@ RSpec.describe AssetsController, type: :controller do
 
     it "gets a list of assets" do
       # grab the first five assets created, and format as json
-      sliced_json = assets.slice(0..4).to_json
+      sliced_json = {assets: assets.slice(0..4) }.to_json
 
       # query for the first 5 assets through the api
       get :index, :offset => 0, :limit => 5, format: :json
