@@ -1,6 +1,5 @@
 class User
-  include NoBrainer::Document
-  include NoBrainer::Document::Timestamps
+  include Entity
 
   field :email, type: String
   field :encrypted_password, type: String
