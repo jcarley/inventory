@@ -18,7 +18,7 @@ class CategoriesController < ApplicationController
     cmd = Categories::CreateCategoryCommand.new(category_params)
     Domain.execute(cmd) do
       is_success? { |result| render json: Category.find(cmd.id) }
-      is_error? { |result| render Lib::ResponseErrorFormatter.format(self, result.error) }
+      is_error? { |result| render Services::ResponseErrorFormatter.format(self, result.error) }
     end
   end
 

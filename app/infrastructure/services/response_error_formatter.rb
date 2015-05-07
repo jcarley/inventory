@@ -1,4 +1,4 @@
-module Lib
+module Services
   class ResponseErrorFormatter
 
     def self.format(controller, error)

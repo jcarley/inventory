@@ -27,6 +27,10 @@ end
 RSpec.configure do |config|
   config.include JsonSpec::Helpers
 
+  config.before(:all) do
+    NoBrainer.sync_indexes
+  end
+
   config.before(:each) do
     NoBrainer.purge!
   end

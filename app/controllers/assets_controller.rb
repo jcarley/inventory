@@ -11,7 +11,7 @@ class AssetsController < ApplicationController
     cmd = Assets::CreateAssetCommand.new(asset_params)
     Domain.execute(cmd) do
       is_success? { |result| render json: Asset.find(cmd.id) }
-      is_error? { |result| render Lib::ResponseErrorFormatter.format(self, result.error) }
+      is_error? { |result| render Services::ResponseErrorFormatter.format(self, result.error) }
     end
   end
 
@@ -19,7 +19,7 @@ class AssetsController < ApplicationController
     cmd = Assets::UpdateAssetCommand.new(:id => asset_id, :attrs => asset_params)
     Domain.execute(cmd) do
       is_success? { |result| render status: :ok, json: Asset.find(asset_id) }
-      is_error? { |result| render Lib::ResponseErrorFormatter.format(self, result.error) }
+      is_error? { |result| render Services::ResponseErrorFormatter.format(self, result.error) }
     end
   end
 
@@ -27,7 +27,7 @@ class AssetsController < ApplicationController
     cmd = Assets::DeleteAssetCommand.new(:id => asset_id)
     Domain.execute(cmd) do
       is_success? { |result| render status: :no_content, json: {} }
-      is_error? { |result| render Lib::ResponseErrorFormatter.format(self, result.error) }
+      is_error? { |result| render Services::ResponseErrorFormatter.format(self, result.error) }
     end
   end
 

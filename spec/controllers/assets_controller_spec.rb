@@ -2,6 +2,14 @@ require 'rails_helper'
 
 RSpec.describe AssetsController, type: :controller do
 
+  let(:user) { FactoryGirl.create(:user) }
+
+  before(:each) do
+    request.env["HTTP_USER_AGENT"] = "hello there ruby"
+    request.env["Authorization"] = "ABC123:#{user.id}"
+    request.env["Api-Key"] = "789XYZ"
+  end
+
   describe "GET #index" do
 
     let(:assets) do

@@ -4,10 +4,63 @@ RSpec.describe TokensController, type: :controller do
 
   describe "GET access_token" do
 
-    it "returns a users access token" do
-      user = FactoryGirl.create(:user)
-      get :access_token, id: user.id, format: :json
-      puts response.body
+    context "with valid headers" do
+
+      before(:each) do
+        request.env["HTTP_USER_AGENT"] = "hello there ruby"
+        request.env["Authorization"] = "ABC123:#{user.id}"
+        request.env["Api-Key"] = "789XYZ"
+      end
+
+      let(:user) { FactoryGirl.create(:user) }
+
+      it "returns a users access token" do
+        puts ActionController::HttpAuthentication::Token.encode_credentials("ABC123", expiration: (DateTime.now + 1.day).rfc3339(9))
+
+
+        get :access_token, format: :json
+        expect(response.body).to have_json_path("token")
+        expect(response.body).to have_json_path("expiration")
+      end
+
+    end
+
+    context "with invalid headers" do
+
+      let(:user) { FactoryGirl.create(:user) }
+
+      it "returns a 401 :unauthorized when missing an sts token" do
+
+        request.env["Authorization"] = ""
+        request.env["Api-Key"] = "789XYZ"
+
+        get :access_token, format: :json
+
+        expect(response).to have_http_status(:unauthorized)
+      end
+
+      it "returns a 401 :unauthorized when missing an api key" do
+
+        request.env["Authorization"] = "ABC123:#{user.id}"
+        request.env["Api-Key"] = ""
+
+        get :access_token, format: :json
+
+        expect(response).to have_http_status(:unauthorized)
+      end
+
+      it "returns a 401 :unauthorized when the user is not enabled" do
+        user = FactoryGirl.create(:user, :enabled => false)
+
+        request.env["Authorization"] = "ABC123:#{user.id}"
+        request.env["Api-Key"] = "789XYZ"
+
+        get :access_token, format: :json
+
+        expect(response).to have_http_status(:unauthorized)
+
+      end
+
     end
 
   end

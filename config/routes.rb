@@ -4,11 +4,11 @@ Rails.application.routes.draw do
 
   mount Sidekiq::Web => '/sidekiq'
 
+  scope :ui do
+    get 'access_token' => 'tokens#access_token'
+  end
+
   scope :api do
-
-    get 'access_token/:id' => 'tokens#access_token'
-
-
     resources :categories, except: [:new, :edit]
     resources :assets, except: [:new, :edit]
   end
