@@ -60,6 +60,26 @@ module.exports = function(grunt) {
       },
     },
 
+    // Renames files for browser caching purposes
+    filerev: {
+      options: {
+        algorithm: 'md5',
+        length: 8
+      },
+      javascripts: {
+        src: '<%= project.dist %>/assets/javascripts/**/*.js',
+        dest: '<%= project.dist %>/assets/javascripts'
+      },
+      css: {
+        src: '<%= project.dist %>/assets/css/**/*.css',
+        dest: '<%= project.dist %>/assets/css'
+      },
+      images: {
+        src: '<%= project.dist %>/assets/images/**/*.{jpg,jpeg,gif,png,webp}',
+        dest: '<%= project.dist %>/assets/images'
+      }
+    },
+
     useminPrepare: {
       html: '<%= project.app %>/index.html',
       options: {
@@ -131,6 +151,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-coffee');
   grunt.loadNpmTasks('grunt-ng-annotate');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-filerev');
   grunt.loadNpmTasks('grunt-usemin');
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -158,6 +179,7 @@ module.exports = function(grunt) {
     'uglify',
     'copy:dist',
     'cssmin',
+    'filerev',
     'usemin'
   ]);
 
