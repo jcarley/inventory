@@ -17,7 +17,11 @@ docker-machine status $project_name &>/dev/null
 if [ $? != 0 ]; then
   echo "# A docker host vm not found."
   echo "# Creating vm and waiting for it to come online..."
-  docker-machine create --driver vmwarefusion $project_name &>/dev/null
+  if command -v VBoxManage >/dev/null; then
+    docker-machine create --driver virtualbox $project_name &>/dev/null
+  else
+    docker-machine create --driver vmwarefusion $project_name &>/dev/null
+  fi
 fi
 
 if test $(docker-machine status $project_name) == "Stopped"; then
