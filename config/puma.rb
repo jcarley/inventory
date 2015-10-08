@@ -1,6 +1,6 @@
-pidfile "tmp/puma.pid"
-state_path "tmp/puma.state"
-bind 'tcp://0.0.0.0:3000'
+pidfile "tmp/pids/puma.pid"
+state_path "tmp/pids/puma.state"
+bind 'tcp://0.0.0.0:9292'
 environment 'development'
 
 threads 5, 16

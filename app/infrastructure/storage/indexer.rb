@@ -3,8 +3,11 @@ module Storage
     include Sidekiq::Worker
     sidekiq_options queue: 'elasticsearch', retry: false
 
+    addr = ENV['SEARCH_PORT_9200_TCP_ADDR']
+    port = ENV['SEARCH_PORT_9200_TCP_PORT']
+
     Logger = Sidekiq.logger.level == Logger::DEBUG ? Sidekiq.logger : nil
-    Client = Elasticsearch::Client.new host: 'localhost:9200', logger: Logger
+    Client = Elasticsearch::Client.new host: "#{addr}:#{port}", logger: Logger
 
     def perform(operation, record_id, model_type)
       logger.debug [operation, "ID: #{record_id}"]

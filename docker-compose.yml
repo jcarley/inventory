@@ -8,29 +8,35 @@ redis:
     - "6379:6379"
 search:
   image: elasticsearch:1.7.2
+  volumes:
+    - '/home/vagrant/apps/inventory/docker/elasticsearch/config:/usr/share/elasticsearch/config'
 web:
   build: .
   command: 'bash -c ''bundle exec puma -C config/puma.rb'''
   working_dir: /app/user
   environment:
-    PORT: 3000
+    PORT: 9292
+    RAILS_ENV: 'development'
   ports:
-    - '3000:3000'
+    - '9292:9292'
   links:
-    - db
+    - db:RETHINKDB_HOST
     - redis
     - search
+  volumes:
+    - '/home/vagrant/apps/inventory:/app/user'
 shell:
   build: .
   command: bash
   working_dir: /app/user
   environment:
-    PORT: 3000
+    PORT: 9292
+    RAILS_ENV: 'development'
   ports:
-    - '3000:3000'
+    - '9292:9292'
   links:
-    - db
+    - db:RETHINKDB_HOST
     - redis
     - search
   volumes:
-    - '.:/app/user'
+    - '/home/vagrant/apps/inventory:/app/user'

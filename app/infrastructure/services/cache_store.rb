@@ -51,7 +51,8 @@ module Services
     private
 
     def connection
-      @redis ||= Redis.new(:host => "localhost", :port => 6379, :db => 15)
+      addr = ENV['REDIS_PORT_6379_TCP_ADDR']
+      @redis ||= Redis.new(:host => addr, :port => 6379, :db => 15)
     end
 
   end
