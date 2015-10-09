@@ -1,0 +1,14 @@
+---
+:verbose: true
+:logfile: ./log/sidekiq.log
+:concurrency: 8
+:queues:
+  - [metadataextraction, 2]
+  - [thumbnailing, 5]
+  - [default, 1]
+  - [transfers, 1]
+  - [file_copies, 1]
+:process_limits:
+  transfers: 2
+  metadataextraction: 5
+

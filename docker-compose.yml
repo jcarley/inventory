@@ -25,6 +25,18 @@ web:
     - search
   volumes:
     - '/home/vagrant/apps/inventory:/app/user'
+sidekiq:
+  build: .
+  command: 'bash -c ''bundle exec sidekiq -C config/sidekiq.yml -P tmp/pids/sidekiq.pid'''
+  working_dir: /app/user
+  environment:
+    RAILS_ENV: 'development'
+  links:
+    - db:RETHINKDB_HOST
+    - redis
+    - search
+  volumes:
+    - '/home/vagrant/apps/inventory:/app/user'
 shell:
   build: .
   command: bash
