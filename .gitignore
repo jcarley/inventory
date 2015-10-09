@@ -23,6 +23,3 @@ client/app/assets/css/
 client/app/assets/javascripts/
 client/dist/
 .tmp/
-
-# Ignore application configuration
-/config/application.yml
