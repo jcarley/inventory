@@ -3,7 +3,9 @@ class ApplicationController < ActionController::API
 
   class NotAuthorizedError < StandardError; end;
 
-  rescue_from NotAuthorizedError, with: :deny_access
+  rescue_from NotAuthorizedError do |exception|
+    deny_access(exception)
+  end
 
   before_action :check_credentials
   before_action :grant_access
@@ -16,9 +18,9 @@ class ApplicationController < ActionController::API
       request.user_agent
     end
 
-    def deny_access
+    def deny_access(exception)
       # renders 401 Unauthorized
-      render status: :unauthorized, json: ""
+      render status: :unauthorized, json: "{\"message\": \"#{exception.message}\"}"
     end
 
     def show_errors(exception)
@@ -46,14 +48,14 @@ class ApplicationController < ActionController::API
     end
 
     def authorization_header
-      header_value = request.env["Authorization"]
-      raise NotAuthorizedError if header_value.blank?
+      header_value = request.headers["Authorization"]
+      raise NotAuthorizedError, "No authorization header" if header_value.blank?
       header_value
     end
 
     def api_key_header
-      key = request.env["Api-Key"]
-      raise NotAuthorizedError if key.blank?
+      key = request.headers["Api-Key"]
+      raise NotAuthorizedError, "No api-key" if key.blank?
       key
     end
 
