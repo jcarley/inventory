@@ -7,9 +7,9 @@ RSpec.describe TokensController, type: :controller do
     context "with valid headers" do
 
       before(:each) do
-        request.env["HTTP_USER_AGENT"] = "hello there ruby"
-        request.env["Authorization"] = "ABC123:#{user.id}"
-        request.env["Api-Key"] = "789XYZ"
+        request.headers["HTTP_USER_AGENT"] = "hello there ruby"
+        request.headers["Authorization"] = "ABC123:#{user.id}"
+        request.headers["Api-Key"] = "789XYZ"
       end
 
       let(:user) { FactoryGirl.create(:user) }
@@ -30,8 +30,8 @@ RSpec.describe TokensController, type: :controller do
 
       it "returns a 401 :unauthorized when missing an sts token" do
 
-        request.env["Authorization"] = ""
-        request.env["Api-Key"] = "789XYZ"
+        request.headers["Authorization"] = ""
+        request.headers["Api-Key"] = "789XYZ"
 
         get :access_token, format: :json
 
@@ -40,8 +40,8 @@ RSpec.describe TokensController, type: :controller do
 
       it "returns a 401 :unauthorized when missing an api key" do
 
-        request.env["Authorization"] = "ABC123:#{user.id}"
-        request.env["Api-Key"] = ""
+        request.headers["Authorization"] = "ABC123:#{user.id}"
+        request.headers["Api-Key"] = ""
 
         get :access_token, format: :json
 
@@ -51,8 +51,8 @@ RSpec.describe TokensController, type: :controller do
       it "returns a 401 :unauthorized when the user is not enabled" do
         user = FactoryGirl.create(:user, :enabled => false)
 
-        request.env["Authorization"] = "ABC123:#{user.id}"
-        request.env["Api-Key"] = "789XYZ"
+        request.headers["Authorization"] = "ABC123:#{user.id}"
+        request.headers["Api-Key"] = "789XYZ"
 
         get :access_token, format: :json
 

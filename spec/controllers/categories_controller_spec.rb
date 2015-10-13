@@ -5,9 +5,9 @@ RSpec.describe CategoriesController, type: :controller do
   let(:user) { FactoryGirl.create(:user) }
 
   before(:each) do
-    request.env["HTTP_USER_AGENT"] = "hello there ruby"
-    request.env["Authorization"] = "ABC123:#{user.id}"
-    request.env["Api-Key"] = "789XYZ"
+    request.headers["HTTP_USER_AGENT"] = "hello there ruby"
+    request.headers["Authorization"] = "ABC123:#{user.id}"
+    request.headers["Api-Key"] = "789XYZ"
   end
 
   describe "POST create" do
