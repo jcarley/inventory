@@ -1,0 +1,1 @@
+class CommandNotValidError < StandardError; end
