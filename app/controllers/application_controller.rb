@@ -17,6 +17,7 @@ class ApplicationController < ActionController::API
     end
 
     def deny_access
+      # renders 401 Unauthorized
       render status: :unauthorized, json: ""
     end
 
