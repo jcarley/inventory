@@ -19,10 +19,6 @@ RSpec.describe CategoriesController, type: :controller do
       end
     end
 
-    context "with invalid attributes" do
-      pending "add some examples to (or delete) #{__FILE__}"
-    end
-
   end
 
 end
