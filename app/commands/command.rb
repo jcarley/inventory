@@ -26,23 +26,4 @@ class Command
     raise NotImplementedError, "#{self.class.name} does not implement an execute method"
   end
 
-  # protected
-
-  # def event(event)
-    # store event
-    # publish event
-  # end
-
-  private
-
-  # def store(event)
-    # event.save! if event
-  # end
-
-  # def publish(event)
-    # EventServer.publish event if event
-  # end
-
 end
-
-
