@@ -8,8 +8,8 @@ Rails.application.routes.draw do
     get 'access_token' => 'tokens#access_token'
   end
 
-  get 'transcode/invoke'
   scope :api do
+    get 'transcode/invoke'
     resources :categories, except: [:new, :edit]
     resources :assets, except: [:new, :edit]
   end
