@@ -89,7 +89,7 @@
     </object>
     <object type="LMREQUEST" id="z105">
         <attribute name="uuid" type="string">17CF4231-CA38-44B4-9287-72F986F49FA9</attribute>
-        <attribute name="url" type="string">http://localhost:9292/api/assets</attribute>
+        <attribute name="url" type="string">http://localhost:9292/api/transcode/invoke</attribute>
         <attribute name="storecookies" type="bool">0</attribute>
         <attribute name="sendcookies" type="bool">0</attribute>
         <attribute name="redirectmethod" type="bool">0</attribute>
@@ -194,7 +194,7 @@
         <relationship name="values" type="0/0" destination="LMENVIRONMENTVARIABLEVALUE" idrefs="z113"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z115">
-        <attribute name="value" type="string">ABC123:2WyKTcLU48By6V</attribute>
+        <attribute name="value" type="string">ABC123:2WyTZyvPNNecbW</attribute>
         <attribute name="order" type="int64">1</attribute>
         <attribute name="name" type="string">Authorization</attribute>
         <attribute name="enabled" type="bool">1</attribute>
