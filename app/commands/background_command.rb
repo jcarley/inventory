@@ -3,6 +3,8 @@ module BackgroundCommand
 
   included do
     include Sidekiq::Worker
+
+    attribute :jid, String
   end
 
   module ClassMethods
@@ -10,7 +12,7 @@ module BackgroundCommand
 
   def run
     if self.valid?
-      self.class.perform_async(self.to_params.to_json)
+      self.jid = self.class.perform_async(self.to_params.to_json)
     else
       raise CommandNotValidError, self.errors.full_messages
     end
