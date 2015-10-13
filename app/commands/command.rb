@@ -3,9 +3,6 @@ class Command
   include ActiveModel::Validations
   include ActiveModel::Serializers::JSON
 
-  class NotImplementedError < StandardError; end
-  class CommandNotValidError < StandardError; end
-
   def self.from_json(json)
     klass = self.new
     klass.from_json(json)
