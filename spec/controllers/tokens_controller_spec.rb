@@ -15,8 +15,7 @@ RSpec.describe TokensController, type: :controller do
       let(:user) { FactoryGirl.create(:user) }
 
       it "returns a users access token" do
-        puts ActionController::HttpAuthentication::Token.encode_credentials("ABC123", expiration: (DateTime.now + 1.day).rfc3339(9))
-
+        # puts ActionController::HttpAuthentication::Token.encode_credentials("ABC123", expiration: (DateTime.now + 1.day).rfc3339(9))
 
         get :access_token, format: :json
         expect(response.body).to have_json_path("token")
