@@ -4,8 +4,14 @@ require 'spec_helper'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'sidekiq/testing'
-Sidekiq::Testing.fake! # fake is the default mode
-Sidekiq::Testing.inline!
+
+# A test fake that pushes all jobs into a jobs array
+Sidekiq::Testing.fake!
+
+# An inline mode that runs the job immediately instead of enqueuing it
+# Sidekiq::Testing.inline!
+
+
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -36,6 +42,7 @@ RSpec.configure do |config|
 
   config.before(:each) do
     NoBrainer.purge!
+    Sidekiq::Worker.clear_all
   end
 
   # RSpec Rails can automatically mix in different behaviours to your tests
