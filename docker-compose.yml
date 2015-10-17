@@ -48,6 +48,8 @@ shell:
   environment:
     PORT: 9292
     RAILS_ENV: 'development'
+    JRUBY_OPTS: --dev
+    JAVA_TOOL_OPTIONS: -Dfile.encoding=UTF8
   ports:
     - '9292:9292'
   links:
