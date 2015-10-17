@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.1'
+gem 'rails', '~> 4.2.1'
 gem 'rails-api'
 gem 'active_model_serializers'
 gem 'puma'
@@ -12,7 +12,8 @@ gem 'virtus'
 gem 'wisper'
 gem 'figaro'
 gem 'elasticsearch-model'
-gem 'elasticsearch-ruby'
+gem 'elasticsearch-rails'
+gem 'ohm'
 gem 'sidekiq'
 gem 'sinatra', :require => nil
 
