@@ -25,6 +25,8 @@ web:
     - search
   volumes:
     - '/home/vagrant/apps/inventory:/app/user'
+  labels:
+    com.finishfirstsoftware.description: "inventory"
 sidekiq:
   build: .
   command: 'bash -c ''bundle exec sidekiq -C config/sidekiq.yml -P tmp/pids/sidekiq.pid'''
@@ -37,6 +39,8 @@ sidekiq:
     - search
   volumes:
     - '/home/vagrant/apps/inventory:/app/user'
+  labels:
+    com.finishfirstsoftware.description: "inventory"
 shell:
   build: .
   command: bash
@@ -52,3 +56,5 @@ shell:
     - search
   volumes:
     - '/home/vagrant/apps/inventory:/app/user'
+  labels:
+    com.finishfirstsoftware.description: "inventory"
