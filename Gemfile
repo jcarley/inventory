@@ -12,7 +12,7 @@ gem 'virtus'
 gem 'wisper'
 gem 'figaro'
 gem 'elasticsearch-model'
-gem 'elasticsearch-ruby'
+gem 'elasticsearch-rails'
 gem 'sidekiq'
 gem 'sinatra', :require => nil
 
