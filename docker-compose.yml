@@ -25,6 +25,8 @@ web:
     - search
   volumes:
     - '/home/vagrant/apps/inventory:/app/user'
+  labels:
+    com.finishfirstsoftware.description: "inventory"
 sidekiq:
   build: .
   command: 'bash -c ''bundle exec sidekiq -C config/sidekiq.yml -P tmp/pids/sidekiq.pid'''
@@ -37,6 +39,8 @@ sidekiq:
     - search
   volumes:
     - '/home/vagrant/apps/inventory:/app/user'
+  labels:
+    com.finishfirstsoftware.description: "inventory"
 shell:
   build: .
   command: bash
@@ -44,6 +48,8 @@ shell:
   environment:
     PORT: 9292
     RAILS_ENV: 'development'
+    JRUBY_OPTS: --dev
+    JAVA_TOOL_OPTIONS: -Dfile.encoding=UTF8
   ports:
     - '9292:9292'
   links:
@@ -52,3 +58,5 @@ shell:
     - search
   volumes:
     - '/home/vagrant/apps/inventory:/app/user'
+  labels:
+    com.finishfirstsoftware.description: "inventory"

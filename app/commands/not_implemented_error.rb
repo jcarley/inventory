@@ -1,1 +1,0 @@
-class NotImplementedError < StandardError; end

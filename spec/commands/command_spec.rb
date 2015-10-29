@@ -8,7 +8,7 @@ RSpec.describe Command do
       it "raises an CommandInvalidError" do
         command = Command.new
         allow(command).to receive(:valid?).and_return(false)
-        expect { command.run }.to raise_error(Command::CommandNotValidError)
+        expect { command.run }.to raise_error(CommandNotValidError)
       end
     end
   end

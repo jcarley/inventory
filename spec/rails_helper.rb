@@ -34,8 +34,10 @@ JsonSpec.configure do
 end
 
 RSpec.configure do |config|
-  config.include JsonSpec::Helpers
 
+  config.example_status_persistence_file_path = "./spec/examples.txt"
+
+  config.include JsonSpec::Helpers
   config.before(:all) do
     NoBrainer.sync_indexes
   end
