@@ -10,7 +10,7 @@ module Assets
       if asset
         # TODO: assign_attributes needs to be redirected through the model so that an update
         # event can be captured
-        asset.assign_attributes(attrs)
+        asset.modify(attrs)
         repo.save(asset)
       end
     end

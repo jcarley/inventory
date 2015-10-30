@@ -12,6 +12,8 @@ module Entity
     self.send(:after_update) { Storage::Indexer.perform_async(:update, self.id, self.class) }
     self.send(:after_destroy) { Storage::Indexer.perform_async(:destroy, self.id, self.class) }
 
+    attr_accessor :is_deleted
+
     field :uid, type: String
   end
 
@@ -48,14 +50,15 @@ module Entity
     event.aggregate_uid = get_uid
     do_apply event
     applied_events << event
-    DomainRepository.save(event)
+    # This needs to move to the repository
+    # DomainRepository.save(event)
   end
 
 private
 
   def do_apply(event)
     method_name = "on_#{event.name.to_s.underscore}".sub(/_event/,'')
-    method(method_name).call(event) if respond_to?(method_name)
+    method(method_name).call(event) if self.respond_to?(method_name, true)
   end
 
 end

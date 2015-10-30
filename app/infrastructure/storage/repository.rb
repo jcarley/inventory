@@ -10,7 +10,11 @@ module Storage
     end
 
     def save(record)
-      record.save?
+      if record.is_deleted
+        delete(record)
+      else
+        record.save?
+      end
     end
 
     def delete_by(id)
