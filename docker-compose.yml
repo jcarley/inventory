@@ -7,7 +7,9 @@ redis:
   ports:
     - "6379:6379"
 search:
-  image: elasticsearch:1.7.2
+  build: ./docker/elasticsearch/
+  ports:
+    - "9200:9200"
   volumes:
     - '/home/vagrant/apps/inventory/docker/elasticsearch/config:/usr/share/elasticsearch/config'
 web:
