@@ -16,14 +16,38 @@ class Asset
 
   def self.create_asset(params)
     asset = Asset.new(params)
-    asset.apply_event(:created_asset, params)
+    asset.apply_event(:asset_created_event, params)
     asset
   end
 
   def self.delete_asset(id)
     asset = Asset.find(id)
-    asset.apply_event(:destroy_asset, :id => id)
+    asset.delete_asset
     asset
+  end
+
+  def modify(params)
+    asset.apply_event(:asset_modified_event, params)
+  end
+
+  def delete_asset
+    apply_event(:asset_destroyed_event, :id => id)
+  end
+
+  private
+
+  def on_asset_created(event)
+    params = event.data
+    assign_attributes(params)
+  end
+
+  def on_asset_destroyed(event)
+    self.is_deleted = true
+  end
+
+  def on_asset_modified(event)
+    params = event.data
+    assign_attributes(params)
   end
 
 end

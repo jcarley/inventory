@@ -9,7 +9,7 @@ module Assets
 
     def execute
       parameters = self.to_params
-      asset = Asset.create_asset(self.to_params)
+      asset = Asset.create_asset(parameters)
       repository = AssetRepository.new
       repository.save(asset)
       @id = asset.id if asset

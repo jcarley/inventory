@@ -22,4 +22,30 @@ RSpec.describe Asset, type: :model do
       expect(asset).to_not be_valid
     end
   end
+
+  describe ".delete_asset" do
+
+    it "is marked for deletion" do
+      original_asset = FactoryGirl.create(:asset)
+      expected_asset = Asset.delete_asset(original_asset.id)
+      expect(expected_asset.is_deleted).to be(true)
+    end
+
+    it "is not deleted from the database" do
+      original_asset = FactoryGirl.create(:asset)
+      Asset.delete_asset(original_asset.id)
+      expect(Asset.find(original_asset.id)).to_not be_nil
+    end
+
+    it "is deleted through repository" do
+      original_asset = FactoryGirl.create(:asset)
+      original_asset.delete_asset
+      repo = AssetRepository.new
+      repo.save(original_asset)
+      expect{ Asset.find(original_asset.id) }.to raise_error(NoBrainer::Error::DocumentNotFound)
+    end
+
+  end
+
+
 end

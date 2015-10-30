@@ -1,6 +1,7 @@
 class AssetsController < ApplicationController
 
   def index
+    # This should be a query object, and pulled from elasticsearch
     paging_params = query_string_params
     repo = AssetRepository.new
     assets = repo.list(paging_params["offset"], paging_params["limit"])
