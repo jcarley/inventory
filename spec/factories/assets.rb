@@ -10,6 +10,7 @@ FactoryGirl.define do
     current_value "9.99"
     manufacturer "MyString"
     purchased_from "MyString"
+    uid "a744d1d0-7fec-11e5-bc65-0242ac110007"
   end
 
 end

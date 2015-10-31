@@ -15,6 +15,12 @@ module Entity
     attr_accessor :is_deleted
 
     field :uid, type: String
+
+    %w(created destroyed modified).each do |m|
+      new_method_name = "on_#{self.name.downcase}_#{m}".to_sym
+      instance_method_name = "on_entity_#{m}".to_sym
+      define_method(new_method_name, instance_method(instance_method_name))
+    end
   end
 
   module ClassMethods
@@ -31,6 +37,10 @@ module Entity
       UUIDTools::UUID.timestamp_create.to_s
     end
 
+  end
+
+  def deleted?
+    self.is_deleted
   end
 
   def as_indexed_json(options = {})
@@ -50,11 +60,25 @@ module Entity
     event.aggregate_uid = get_uid
     do_apply event
     applied_events << event
-    # This needs to move to the repository
-    # DomainRepository.save(event)
   end
 
-private
+  protected
+
+  def on_entity_created(event)
+    params = event.data
+    assign_attributes(params)
+  end
+
+  def on_entity_destroyed(event)
+    self.is_deleted = true
+  end
+
+  def on_entity_modified(event)
+    params = event.data
+    assign_attributes(params)
+  end
+
+  private
 
   def do_apply(event)
     method_name = "on_#{event.name.to_s.underscore}".sub(/_event/,'')
