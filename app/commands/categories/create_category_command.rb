@@ -10,8 +10,8 @@ module Categories
 
     def execute
       parameters = self.to_params
-      category = Category.create_category(parameters)
       repository = CategoryRepository.new
+      category = repository.create(parameters)
       repository.save(category)
       @id = category.id if category
     end
