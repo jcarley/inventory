@@ -3,14 +3,14 @@ module Entity
 
   included do
 
-    include Elasticsearch::Model
-    include Elasticsearch::Model::Callbacks
+    # include Elasticsearch::Model
+    # include Elasticsearch::Model::Callbacks
     include NoBrainer::Document
     include NoBrainer::Document::Timestamps
 
     self.send(:after_create) { Storage::Indexer.perform_async(:index, self.id, self.class) }
     self.send(:after_update) { Storage::Indexer.perform_async(:update, self.id, self.class) }
-    self.send(:after_destroy) { Storage::Indexer.perform_async(:destroy, self.id, self.class) }
+    self.send(:after_destroy) { Storage::Indexer.perform_async(:delete, self.id, self.class) }
 
     attr_accessor :is_deleted
 
@@ -56,7 +56,7 @@ module Entity
   end
 
   def apply_event(name, attributes)
-    event = Event.new(:name => name, :data => attributes)
+    event = Event.new(:name => name, :class_name => self.class.name, :data => attributes)
     event.aggregate_uid = get_uid
     do_apply event
     applied_events << event

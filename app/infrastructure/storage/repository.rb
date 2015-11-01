@@ -41,7 +41,10 @@ module Storage
     end
 
     def save(record)
-      record.deleted? ? _destroy_record(record) : _create_or_update_record(record)
+      record_uncommited_events(record)
+      result = record.deleted? ? _destroy_record(record) : _create_or_update_record(record)
+      mark_events_as_committed(record)
+      result
     end
 
     protected
@@ -54,6 +57,16 @@ module Storage
     end
 
     private
+
+    def record_uncommited_events(record)
+      record.applied_events.each do |event|
+        EventStore.save(event)
+      end
+    end
+
+    def mark_events_as_committed(record)
+      record.applied_events.clear
+    end
 
     def _destroy_record(record)
       record.destroy
