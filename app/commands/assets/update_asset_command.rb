@@ -8,9 +8,7 @@ module Assets
       repo = AssetRepository.new
       asset = repo.find(id)
       if asset
-        # TODO: assign_attributes needs to be redirected through the model so that an update
-        # event can be captured
-        asset.modify(attrs)
+        repo.modify(asset, attrs)
         repo.save(asset)
       end
     end
