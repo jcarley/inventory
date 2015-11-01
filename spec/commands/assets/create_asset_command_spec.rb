@@ -4,6 +4,12 @@ RSpec.describe Assets::CreateAssetCommand do
 
   describe "#execute" do
 
+    it "sets the id field" do
+      cmd = Assets::CreateAssetCommand.new(:name => "Book")
+      cmd.execute
+      expect(cmd.id).to_not be_nil
+    end
+
     it "requies a name" do
       cmd = Assets::CreateAssetCommand.new(:name => "Book")
       expect(cmd).to be_valid
