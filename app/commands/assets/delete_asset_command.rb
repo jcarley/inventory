@@ -4,9 +4,8 @@ module Assets
     attribute :id, String
 
     def execute
-      asset = Asset.delete_asset(self.id)
       repository = AssetRepository.new
-      repository.delete(asset)
+      repository.delete_by(self.id)
     end
 
   end
